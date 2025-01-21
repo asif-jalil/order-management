@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Products {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  price       Int
+  weight      Int
+  isEnabled   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems OrderItems[]
+}
+
+model Promotions {
+  id        Int            @id @default(autoincrement())
+  title     String
+  startsAt  DateTime
+  endsAt    DateTime
+  type      PromotionTypes @default(PERCENTAGE)
+  isEnabled Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  promotionDiscount PromotionDiscount[]
+}
+
+model PromotionDiscount {
+  id          Int      @id @default(autoincrement())
+  promotionId Int
+  minQuantity Int?
+  maxQuantity Int?
+  discount    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  promotion Promotions @relation(fields: [promotionId], references: [id])
+}
+
+model Orders {
+  id              Int      @id @default(autoincrement())
+  shippingAddress String
+  grandTotal     Int
+  discount        Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  orderItems OrderItems[]
+}
+
+model OrderItems {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  unitPrice Int
+  discount  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Products @relation(fields: [productId], references: [id])
+  order   Orders   @relation(fields: [orderId], references: [id])
+}
+
+enum PromotionTypes {
+  PERCENTAGE
+  FIXED
+  WEIGHTED
+}
