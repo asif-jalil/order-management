@@ -26,7 +26,7 @@ export class AuthService {
     try {
       const user = await this.prisma.users.findFirst({
         where: {
-          email: dto.identifier,
+          email: dto.email,
         },
       });
 
@@ -42,7 +42,7 @@ export class AuthService {
       if (!match) {
         return {
           status: 403,
-          message: 'Your password is incorrect',
+          password: 'Your password is incorrect',
         };
       }
 

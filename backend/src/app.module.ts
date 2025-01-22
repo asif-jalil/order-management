@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './apps/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { SharedModule } from './modules/shared.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { AuthGuard } from './guards';
 import { RedisModule } from './modules/redis/redis.module';
 import { ProductModule } from './product/product.module';
@@ -12,6 +12,7 @@ import { CUSTOM_PRISMA } from './common/constants/prisma.const';
 import { ExtendedPrismaConfigService } from './modules/prisma/extended-prisma.service';
 import { PrismaModule } from 'nestjs-prisma';
 import { OrderModule } from './order/order.module';
+import { ValidateIncomingInput } from './pipes/validate-incoming-input.pipe';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -34,6 +35,10 @@ import { OrderModule } from './order/order.module';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidateIncomingInput,
     },
   ],
 })
