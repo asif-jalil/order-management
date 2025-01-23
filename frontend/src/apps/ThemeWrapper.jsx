@@ -3,8 +3,14 @@ import "@mantine/core/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
+import "@mantine/dates/styles.css";
 
-const theme = createTheme({});
+const theme = createTheme({
+  headings: {
+    fontWeight: "500",
+    fontSizes: 14,
+  },
+});
 
 const ThemeWrapper = ({ children }) => {
   return (
