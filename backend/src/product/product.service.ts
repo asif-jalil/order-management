@@ -1,10 +1,10 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { QueryParamDto } from 'src/common/dto/query-param.dto';
 import { CustomPrismaService, PrismaService } from 'nestjs-prisma';
 import { ExtendedPrismaClient } from 'src/modules/prisma/prisma.extension';
 import { CUSTOM_PRISMA } from 'src/common/constants/prisma.const';
+import { GetProductsDto } from './dto/get-products.dto';
 
 @Injectable()
 export class ProductService {
@@ -32,8 +32,8 @@ export class ProductService {
     };
   }
 
-  async getProducts(query: QueryParamDto) {
-    const { page = 1, perPage = 10, search } = query;
+  async getProducts(query: GetProductsDto) {
+    const { page = 1, perPage = 10, search, filter = {} } = query;
 
     const [products, meta] = await this.customPrisma.client.products
       .paginate({
@@ -49,11 +49,13 @@ export class ProductService {
           name: {
             contains: search,
           },
+          ...filter,
         },
       })
       .withPages({
         limit: perPage,
         page,
+        includePageCount: true,
       });
 
     return {

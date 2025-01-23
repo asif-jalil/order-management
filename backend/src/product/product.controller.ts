@@ -12,8 +12,8 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { QueryParamDto } from 'src/common/dto/query-param.dto';
 import { Response } from 'express';
+import { GetProductsDto } from './dto/get-products.dto';
 
 @Controller('products')
 export class ProductController {
@@ -27,7 +27,7 @@ export class ProductController {
   }
 
   @Get()
-  async getProducts(@Query() query: QueryParamDto, @Res() res: Response) {
+  async getProducts(@Query() query: GetProductsDto, @Res() res: Response) {
     const result = await this.productService.getProducts(query);
 
     return res.status(result.status).json(result);

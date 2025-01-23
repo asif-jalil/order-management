@@ -83,7 +83,7 @@ export class PromotionService {
     return {
       status: HttpStatus.OK,
       message: 'Promotions found',
-      data: promotions,
+      data: { items: promotions },
     };
   }
 

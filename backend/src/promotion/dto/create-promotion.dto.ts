@@ -15,11 +15,11 @@ import { Type } from 'class-transformer';
 class DiscountDto {
   @IsOptional()
   @IsInt()
-  minQuantity: number;
+  minQuantity?: number;
 
   @IsOptional()
   @IsInt()
-  maxQuantity: number;
+  maxQuantity?: number;
 
   @IsNotEmpty()
   @IsNumber()

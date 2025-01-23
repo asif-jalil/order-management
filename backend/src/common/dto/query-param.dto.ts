@@ -6,7 +6,6 @@ import {
   IsString,
   Max,
   Min,
-  MinLength,
 } from 'class-validator';
 
 export class QueryParamDto {
@@ -27,6 +26,5 @@ export class QueryParamDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(3)
   search?: string;
 }
