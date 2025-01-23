@@ -62,6 +62,7 @@ const SignIn = () => {
               placeholder="Enter your email"
               size="md"
               radius="md"
+              withAsterisk
               {...form.getInputProps("email")}
             />
             <PasswordInput
@@ -69,6 +70,7 @@ const SignIn = () => {
               placeholder="Enter your password"
               size="md"
               radius="md"
+              withAsterisk
               {...form.getInputProps("password")}
             />
             <Group position="apart" mt="xs">
