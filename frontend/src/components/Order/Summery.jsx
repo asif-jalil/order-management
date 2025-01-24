@@ -3,16 +3,12 @@ import { Box, Card, Divider, Flex, Text, Title } from "@mantine/core";
 const getSummery = (data) => [
   {
     title: "Items subtotal:",
-    value: `$${data.grandTotal + data.discount}`,
+    value: `$${data.subtotal}`,
   },
   ,
   {
     title: "Discount:",
     value: `-$${data.discount}`,
-  },
-  {
-    title: "Shipping cost:",
-    value: `$0`,
   },
 ];
 
@@ -25,21 +21,17 @@ const SummeryRow = ({ item }) => (
 
 const Summery = ({ data = {} }) => {
   return (
-    <Card withBorder shadow="xs">
-      <Card.Section bg="gray.0">
-        <Title order={4} p="sm">
-          Summery
-        </Title>
-      </Card.Section>
+    <Card withBorder>
+      <Title order={4}>Summery</Title>
       <Box py="md">
         {getSummery(data).map((item, index) => (
           <SummeryRow key={index} item={item} />
         ))}
       </Box>
-      <Divider my="sm" variant="dashed" />
+      <Divider variant="dashed" />
       <Flex justify="space-between" py="md">
         <Title order={4}>Total:</Title>
-        <Title order={4}>${data.grandTotal}</Title>
+        <Title order={4}>${Math.max(data.subtotal - data.discount, 0)}</Title>
       </Flex>
     </Card>
   );

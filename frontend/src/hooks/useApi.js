@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
     const { status, statusText } = error.response;
 
     if (status === 401 && statusText === "Unauthorized") {
-      store.dispatch(authActions.signout);
+      store.dispatch(authActions.signout());
     }
 
     return Promise.reject(error);

@@ -30,7 +30,6 @@ const orderColumn = [
     accessorKey: "subtotal",
     header: "Subtotal",
     size: 80,
-    cell: (info) => info.row.original.grandTotal + info.row.original.discount,
   },
   {
     accessorKey: "discount",
@@ -41,6 +40,8 @@ const orderColumn = [
     accessorKey: "grandTotal",
     header: "Grand total",
     size: 100,
+    cell: (info) =>
+      Math.max(info.row.original.subtotal - info.row.original.discount, 0),
   },
   {
     accessorKey: "none",

@@ -18,14 +18,6 @@ code {
   }
 }
 
-.mantine-Table-table > thead {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background-color: var(--mantine-color-body);
-  outline: 1px solid var(--mantine-color-gray-4);
-}
-
 .leaflet-routing-container {
   display: none;
 }
