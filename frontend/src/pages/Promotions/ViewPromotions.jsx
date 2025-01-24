@@ -1,16 +1,16 @@
 import { notifications } from "@mantine/notifications";
 import useApi from "../../hooks/useApi";
-import useTable from "../../hooks/useTable";
+import useDataTable from "../../hooks/useDataTable";
 import promotionColumns from "../../utils/table/columns/promotion";
 import promotions from "../../utils/table/itemActions/promotion";
 import prepareColumns from "../../utils/table/prepareColumns";
-import Table from "../../components/ui/Table/Table";
+import DataTable from "../../components/ui/Table/DataTable";
 import { ADD_PROMOTION } from "../../constants/AppUrls";
 import AddButton from "../../components/ui/AddButton";
 
 const ViewPromotions = () => {
   const api = useApi();
-  const state = useTable({
+  const state = useDataTable({
     endpoint: "/promotions",
   });
 
@@ -41,7 +41,7 @@ const ViewPromotions = () => {
   });
 
   return (
-    <Table
+    <DataTable
       state={state}
       columns={columns}
       title="Promotions"

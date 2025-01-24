@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import useApi from "./useApi";
 
-const useTable = ({ endpoint, limit = 10, filters }) => {
+const useDataTable = ({ endpoint, limit = 10, filters, path = "items" }) => {
   const [data, setData] = useState([]);
+  const [result, setResult] = useState();
   const api = useApi();
   const [meta, setMeta] = useState({
     currentPage: 1,
@@ -23,8 +24,9 @@ const useTable = ({ endpoint, limit = 10, filters }) => {
 
       try {
         const response = await api.get(endpoint, { params });
-        const { items, meta } = response.data.data;
+        const { [path]: items, meta } = response.data.data;
 
+        setResult(response.data);
         setData(items);
         if (meta) setMeta(meta);
       } catch (error) {
@@ -64,6 +66,7 @@ const useTable = ({ endpoint, limit = 10, filters }) => {
   }, [fetchData]);
 
   return {
+    result,
     data,
     loading,
     meta,
@@ -76,4 +79,4 @@ const useTable = ({ endpoint, limit = 10, filters }) => {
   };
 };
 
-export default useTable;
+export default useDataTable;

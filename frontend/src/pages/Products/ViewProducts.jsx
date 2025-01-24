@@ -1,16 +1,16 @@
-import Table from "../../components/ui/Table/Table";
+import DataTable from "../../components/ui/Table/DataTable";
 import productColumns from "../../utils/table/columns/product";
 import prepareColumns from "../../utils/table/prepareColumns";
 import products from "../../utils/table/itemActions/products";
 import { ADD_PRODUCT } from "../../constants/AppUrls";
 import useApi from "../../hooks/useApi";
 import { notifications } from "@mantine/notifications";
-import useTable from "../../hooks/useTable";
+import useDataTable from "../../hooks/useDataTable";
 import AddButton from "../../components/ui/AddButton";
 
 const ViewProducts = () => {
   const api = useApi();
-  const state = useTable({
+  const state = useDataTable({
     endpoint: "/products",
   });
 
@@ -41,7 +41,7 @@ const ViewProducts = () => {
   });
 
   return (
-    <Table
+    <DataTable
       state={state}
       columns={columns}
       title="Products"

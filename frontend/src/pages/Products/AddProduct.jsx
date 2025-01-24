@@ -19,8 +19,6 @@ const AddProduct = () => {
   });
 
   const handleAddProduct = (values, _, isExit = false) => {
-    console.log(isExit);
-
     api
       .post("/products", values)
       .then((res) => res.data)

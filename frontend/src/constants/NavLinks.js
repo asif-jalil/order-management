@@ -2,7 +2,7 @@ import {
   IconBox,
   IconGift,
   IconLayoutDashboard,
-  IconSettings,
+  IconShoppingCart,
 } from "@tabler/icons-react";
 import * as urls from "./AppUrls";
 
@@ -43,9 +43,19 @@ const navLinks = [
     ],
   },
   {
-    url: "/settings",
-    label: "Settings",
-    Icon: IconSettings,
+    url: urls.VIEW_ORDERS,
+    label: "Orders",
+    Icon: IconShoppingCart,
+    children: [
+      {
+        url: urls.VIEW_ORDERS,
+        label: "View orders",
+      },
+      {
+        url: urls.ADD_ORDER,
+        label: "Add order",
+      },
+    ],
   },
 ];
 

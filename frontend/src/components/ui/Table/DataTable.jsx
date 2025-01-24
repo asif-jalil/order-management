@@ -21,7 +21,7 @@ import { useDebouncedCallback } from "@mantine/hooks";
 import { useState } from "react";
 import { IconSearch } from "@tabler/icons-react";
 
-const Table = ({
+const DataTable = ({
   state,
   columns,
   title,
@@ -47,28 +47,32 @@ const Table = ({
 
   return (
     <Box>
-      <Flex
-        gap="md"
-        mb={28}
-        align="center"
-        justify="space-between"
-        direction={{ base: "column", xs: "row" }}
-      >
-        <Flex gap="md">
-          <Title order={2}>{title}</Title>
-          {addButton && addButton}
+      {(title || showSearch) && (
+        <Flex
+          gap="md"
+          mb={28}
+          align="center"
+          justify="space-between"
+          direction={{ base: "column", xs: "row" }}
+        >
+          {title && (
+            <Flex gap="md">
+              <Title order={2}>{title}</Title>
+              {addButton && addButton}
+            </Flex>
+          )}
+          {showSearch && (
+            <Flex>
+              <TextInput
+                value={search}
+                onChange={handleOnChange}
+                leftSection={<IconSearch size={16} />}
+                placeholder="Search here..."
+              />
+            </Flex>
+          )}
         </Flex>
-        {showSearch && (
-          <Flex>
-            <TextInput
-              value={search}
-              onChange={handleOnChange}
-              leftSection={<IconSearch size={16} />}
-              placeholder="Search here..."
-            />
-          </Flex>
-        )}
-      </Flex>
+      )}
       <OverlayLoader show={state.loading && table.getRowCount() > 0}>
         <Card withBorder p={0} style={{ overflowX: "auto" }}>
           <MTable>
@@ -171,4 +175,4 @@ const Table = ({
   );
 };
 
-export default Table;
+export default DataTable;

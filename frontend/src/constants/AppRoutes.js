@@ -1,5 +1,8 @@
 import SignIn from "../pages/Auth/SignIn";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import AddOrder from "../pages/Order/AddOrder";
+import ViewOrder from "../pages/Order/ViewOrder";
+import ViewOrders from "../pages/Order/ViewOrders";
 import AddProduct from "../pages/Products/AddProduct";
 import EditProduct from "../pages/Products/EditProduct";
 import ViewProducts from "../pages/Products/ViewProducts";
@@ -53,10 +56,27 @@ const route = [
     isIndexUrl: false,
     isProtected: true,
   },
-
   {
     path: urls.EDIT_PROMOTION,
     Element: EditPromotion,
+    isIndexUrl: false,
+    isProtected: true,
+  },
+  {
+    path: urls.VIEW_ORDERS,
+    Element: ViewOrders,
+    isIndexUrl: false,
+    isProtected: true,
+  },
+  {
+    path: urls.VIEW_ORDER,
+    Element: ViewOrder,
+    isIndexUrl: false,
+    isProtected: true,
+  },
+  {
+    path: urls.ADD_ORDER,
+    Element: AddOrder,
     isIndexUrl: false,
     isProtected: true,
   },
