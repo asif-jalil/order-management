@@ -7,11 +7,13 @@ import {
   Param,
   Res,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { PromotionService } from './promotion.service';
 import { CreatePromotionDto } from './dto/create-promotion.dto';
 import { UpdatePromotionDto } from './dto/update-promotion.dto';
 import { Response } from 'express';
+import { GetPromotionsDto } from './dto/get-promotion.dto';
 
 @Controller('promotions')
 export class PromotionController {
@@ -28,8 +30,8 @@ export class PromotionController {
   }
 
   @Get()
-  async getPromotions(@Res() res: Response) {
-    const result = await this.promotionService.getPromotions();
+  async getPromotions(@Query() query: GetPromotionsDto, @Res() res: Response) {
+    const result = await this.promotionService.getPromotions(query);
 
     return res.status(result.status).json(result);
   }

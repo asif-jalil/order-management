@@ -33,7 +33,7 @@ export class ProductService {
   }
 
   async getProducts(query: GetProductsDto) {
-    const { page = 1, perPage = 10, search, filter = {} } = query;
+    const { page = 1, perPage = 0, search, filter = {} } = query;
 
     const [products, meta] = await this.customPrisma.client.products
       .paginate({

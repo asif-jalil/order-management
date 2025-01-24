@@ -144,8 +144,10 @@ export class OrderService {
           shippingAddress: true,
           grandTotal: true,
           discount: true,
+          createdAt: true,
           orderItems: {
             select: {
+              id: true,
               quantity: true,
               unitPrice: true,
               discount: true,
@@ -159,6 +161,7 @@ export class OrderService {
       .withPages({
         limit: perPage,
         page,
+        includePageCount: true,
       });
 
     return {
@@ -175,6 +178,7 @@ export class OrderService {
         shippingAddress: true,
         grandTotal: true,
         discount: true,
+        createdAt: true,
         orderItems: {
           select: {
             quantity: true,

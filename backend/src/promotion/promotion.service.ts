@@ -1,12 +1,19 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { CreatePromotionDto } from './dto/create-promotion.dto';
 import { UpdatePromotionDto } from './dto/update-promotion.dto';
-import { PrismaService } from 'nestjs-prisma';
+import { CustomPrismaService, PrismaService } from 'nestjs-prisma';
 import { PromotionTypes } from '@prisma/client';
+import { GetPromotionsDto } from './dto/get-promotion.dto';
+import { CUSTOM_PRISMA } from 'src/common/constants/prisma.const';
+import { ExtendedPrismaClient } from 'src/modules/prisma/prisma.extension';
 
 @Injectable()
 export class PromotionService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject(CUSTOM_PRISMA)
+    private customPrisma: CustomPrismaService<ExtendedPrismaClient>,
+  ) {}
 
   async createPromotion(args: CreatePromotionDto) {
     const promotion = await this.prisma.promotions.create({
@@ -60,25 +67,39 @@ export class PromotionService {
     };
   }
 
-  async getPromotions() {
-    const promotions = await this.prisma.promotions.findMany({
-      select: {
-        id: true,
-        title: true,
-        startsAt: true,
-        endsAt: true,
-        type: true,
-        isEnabled: true,
-        promotionDiscount: {
-          select: {
-            id: true,
-            minQuantity: true,
-            maxQuantity: true,
-            discount: true,
+  async getPromotions(query: GetPromotionsDto) {
+    const { page = 1, perPage = 10, search, filter = {} } = query;
+
+    const [promotions] = await this.customPrisma.client.promotions
+      .paginate({
+        select: {
+          id: true,
+          title: true,
+          startsAt: true,
+          endsAt: true,
+          type: true,
+          isEnabled: true,
+          promotionDiscount: {
+            select: {
+              id: true,
+              minQuantity: true,
+              maxQuantity: true,
+              discount: true,
+            },
           },
         },
-      },
-    });
+        where: {
+          title: {
+            contains: search,
+          },
+          ...filter,
+        },
+      })
+      .withPages({
+        limit: perPage,
+        page,
+        includePageCount: true,
+      });
 
     return {
       status: HttpStatus.OK,
