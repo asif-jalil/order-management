@@ -64,7 +64,7 @@ model PromotionDiscount {
 model Orders {
   id              Int      @id @default(autoincrement())
   shippingAddress String
-  grandTotal     Int
+  subtotal        Int
   discount        Int
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

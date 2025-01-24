@@ -12,6 +12,16 @@ class FilterDto {
   })
   @IsBoolean()
   isEnabled?: boolean;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      return value.toLowerCase() === 'true';
+    }
+    return value;
+  })
+  @IsBoolean()
+  hasNotExpired: boolean;
 }
 
 export class GetPromotionsDto extends QueryParamDto {

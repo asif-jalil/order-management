@@ -29,7 +29,7 @@ CREATE TABLE `PromotionDiscount` (
 CREATE TABLE `Orders` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `shippingAddress` VARCHAR(191) NOT NULL,
-    `totalAmount` INTEGER NOT NULL,
+    `subtotal` INTEGER NOT NULL,
     `discount` INTEGER NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,

@@ -6,6 +6,7 @@ import { PromotionTypes } from '@prisma/client';
 import { GetPromotionsDto } from './dto/get-promotion.dto';
 import { CUSTOM_PRISMA } from 'src/common/constants/prisma.const';
 import { ExtendedPrismaClient } from 'src/modules/prisma/prisma.extension';
+import * as moment from 'moment';
 
 @Injectable()
 export class PromotionService {
@@ -68,7 +69,7 @@ export class PromotionService {
   }
 
   async getPromotions(query: GetPromotionsDto) {
-    const { page = 1, perPage = 10, search, filter = {} } = query;
+    const { page = 1, perPage = 10, search, filter } = query;
 
     const [promotions] = await this.customPrisma.client.promotions
       .paginate({
@@ -92,7 +93,14 @@ export class PromotionService {
           title: {
             contains: search,
           },
-          ...filter,
+          ...(typeof filter?.isEnabled !== 'undefined' && {
+            isEnabled: filter.isEnabled,
+          }),
+          ...(typeof filter?.hasNotExpired !== 'undefined' &&
+            filter.hasNotExpired && {
+              startsAt: { lte: moment().toDate() },
+              endsAt: { gte: moment().toDate() },
+            }),
         },
       })
       .withPages({

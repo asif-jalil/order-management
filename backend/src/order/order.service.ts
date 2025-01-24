@@ -73,7 +73,7 @@ export class OrderService {
       }
 
       if (promotion && promotion.type === 'FIXED') {
-        discount = promotion.promotionDiscount[0].discount * item.quantity;
+        discount = promotion.promotionDiscount[0].discount;
       }
 
       if (promotion && promotion.type === 'WEIGHTED') {
@@ -104,18 +104,16 @@ export class OrderService {
 
     const discount = orderItems.reduce((prev, curr) => prev + curr.discount, 0);
 
-    const grandTotal = subtotal - discount;
-
     const order = await this.prisma.orders.create({
       select: {
         id: true,
         shippingAddress: true,
-        grandTotal: true,
+        subtotal: true,
         discount: true,
       },
       data: {
         shippingAddress: args.shippingAddress,
-        grandTotal,
+        subtotal,
         discount,
       },
     });
@@ -142,7 +140,7 @@ export class OrderService {
         select: {
           id: true,
           shippingAddress: true,
-          grandTotal: true,
+          subtotal: true,
           discount: true,
           createdAt: true,
           orderItems: {
@@ -176,7 +174,7 @@ export class OrderService {
       select: {
         id: true,
         shippingAddress: true,
-        grandTotal: true,
+        subtotal: true,
         discount: true,
         createdAt: true,
         orderItems: {

@@ -5,6 +5,7 @@ import {
   ValidateNested,
   IsOptional,
   IsString,
+  ArrayMinSize,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -28,6 +29,7 @@ export class CreateOrderDto {
   promotionId?: number;
 
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => CreateOrderItemDto)
   orderItems: CreateOrderItemDto[];
