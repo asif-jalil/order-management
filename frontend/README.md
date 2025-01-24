@@ -1,8 +1,43 @@
-# React + Vite
+# order-management-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Provides react frontend for order management system
 
-Currently, two official plugins are available:
+## Developed by
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Asif Jalil](https://www.linkedin.com/in/asifjalil0)
+
+## Technologies
+
+- React
+- React Router 6
+- Mantine UI
+
+## Run locally
+
+Clone the project
+
+```bash
+  git clone git@github.com:asif-jalil/order-management.git
+```
+
+Go to folder directory
+
+```bash
+  cd order-management/frontend
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm start
+```
+
+## How to
+
+- Build for production : `npm run build`
