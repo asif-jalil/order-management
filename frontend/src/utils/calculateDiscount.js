@@ -8,7 +8,7 @@ const calculateDiscount = ({ promotion, weight, quantity, basePrice }) => {
     return (basePrice * promotion.promotionDiscount[0].discount) / 100;
   }
   if (promotion && promotion.type === FIXED) {
-    return promotion.promotionDiscount[0].discount * (quantity || 0);
+    return promotion.promotionDiscount[0].discount;
   }
   if (promotion && promotion.type === WEIGHTED) {
     const totalWeight = weight * quantity;
