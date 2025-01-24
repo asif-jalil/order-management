@@ -1,14 +1,14 @@
-import { Card, Divider, Flex, Text, Title } from "@mantine/core";
+import { Box, Card, Divider, Flex, Text, Title } from "@mantine/core";
 
-const getSummery = (result) => [
+const getSummery = (data) => [
   {
     title: "Items subtotal:",
-    value: `$${result?.data.grandTotal + result?.data.discount}`,
+    value: `$${data.grandTotal + data.discount}`,
   },
   ,
   {
     title: "Discount:",
-    value: `-$${result?.data.discount}`,
+    value: `-$${data.discount}`,
   },
   {
     title: "Shipping cost:",
@@ -17,25 +17,29 @@ const getSummery = (result) => [
 ];
 
 const SummeryRow = ({ item }) => (
-  <Flex justify="space-between" my={3}>
+  <Flex justify="space-between" my="xs">
     <Text>{item.title}</Text>
     <Text>{item.value}</Text>
   </Flex>
 );
 
-const Summery = ({ state }) => {
+const Summery = ({ data = {} }) => {
   return (
     <Card withBorder shadow="xs">
-      <Title order={3} mb="md">
-        Summery
-      </Title>
-      {getSummery(state.result).map((item) => (
-        <SummeryRow item={item} />
-      ))}
+      <Card.Section bg="gray.0">
+        <Title order={4} p="sm">
+          Summery
+        </Title>
+      </Card.Section>
+      <Box py="md">
+        {getSummery(data).map((item, index) => (
+          <SummeryRow key={index} item={item} />
+        ))}
+      </Box>
       <Divider my="sm" variant="dashed" />
-      <Flex justify="space-between" my={3}>
+      <Flex justify="space-between" py="md">
         <Title order={4}>Total:</Title>
-        <Title order={4}>${state.result?.data.grandTotal}</Title>
+        <Title order={4}>${data.grandTotal}</Title>
       </Flex>
     </Card>
   );

@@ -37,7 +37,7 @@ const ViewOrder = () => {
           />
         </Grid.Col>
         <Grid.Col span={{ lg: 3 }}>
-          <Summery state={state} />
+          <Summery data={state.result?.data} />
         </Grid.Col>
       </Grid>
     </>
