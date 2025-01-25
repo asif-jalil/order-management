@@ -18,7 +18,7 @@ const calculateDiscount = ({ promotion, weight, quantity, basePrice }) => {
         (s.maxQuantity === null || totalWeight <= s.maxQuantity)
     );
     if (slab) {
-      return (slab.discount * totalWeight) / weight;
+      return (slab.discount * totalWeight) / weight || 0;
     }
   }
 
