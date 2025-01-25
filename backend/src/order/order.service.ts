@@ -38,6 +38,8 @@ export class OrderService {
       promotion = await this.prisma.promotions.findUnique({
         select: {
           type: true,
+          startsAt: true,
+          endsAt: true,
           promotionDiscount: {
             select: {
               id: true,
@@ -50,15 +52,27 @@ export class OrderService {
         where: {
           id: args.promotionId,
           isEnabled: true,
-          startsAt: { lte: moment().toDate() },
-          endsAt: { gte: moment().toDate() },
         },
       });
 
       if (!promotion) {
         return {
           status: HttpStatus.BAD_REQUEST,
-          message: 'Promotion is expired or inactive',
+          message: 'Promotion is inactive',
+        };
+      }
+
+      if (
+        !moment().isBetween(
+          moment(promotion.startsAt),
+          moment(promotion.endsAt),
+          'day',
+          '[]',
+        )
+      ) {
+        return {
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Promotion is expired',
         };
       }
     }

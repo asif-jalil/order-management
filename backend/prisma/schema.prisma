@@ -34,6 +34,9 @@ model Products {
   updatedAt   DateTime @updatedAt
 
   orderItems OrderItems[]
+
+  @@index([id, isEnabled])
+
 }
 
 model Promotions {
@@ -47,6 +50,8 @@ model Promotions {
   updatedAt DateTime       @updatedAt
 
   promotionDiscount PromotionDiscount[]
+
+  @@index([id, isEnabled])
 }
 
 model PromotionDiscount {

@@ -69,7 +69,7 @@ export class PromotionService {
   }
 
   async getPromotions(query: GetPromotionsDto) {
-    const { page = 1, perPage = 10, search, filter } = query;
+    const { page = 1, perPage = null, search, filter } = query;
 
     const [promotions] = await this.customPrisma.client.promotions
       .paginate({
